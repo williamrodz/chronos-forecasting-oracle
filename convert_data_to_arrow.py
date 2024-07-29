@@ -27,17 +27,33 @@ def convert_to_arrow(
 
 if __name__ == "__main__":
     # Generate 20 random time series of length 1024
-    time_series = [np.random.randn(1024) for i in range(20)]
+    # time_series = [np.random.randn(1024) for i in range(20)]
     # print(time_series)
-    print(np.shape(time_series))
+    # print(np.shape(time_series))
 
     # Convert to GluonTS arrow format
     # convert_to_arrow("./noise-data.arrow", time_series=time_series)
 
     # Load the dataset from csv
-    system_prices_df = pd.read_csv("./data/system_price.csv")
-    sytem_prices_values_np = np.array(system_prices_df["Daily average"].values)
-    print(sytem_prices_values_np)
-    print(sytem_prices_values_np)
-    print(np.shape([sytem_prices_values_np]))
-    convert_to_arrow("./system-prices.arrow", time_series=[sytem_prices_values_np])
+    # system_prices_df = pd.read_csv("./data/system_price.csv")
+    # sytem_prices_values_np = np.array(system_prices_df["Daily average"].values)
+    # print(sytem_prices_values_np)
+    # print(sytem_prices_values_np)
+    # print(np.shape([sytem_prices_values_np]))
+    # convert_to_arrow("./system-prices.arrow", time_series=[sytem_prices_values_np])
+
+    # Prepare Agile Octopus Training Data
+
+    training_data_file_names = [
+        "agile_octopus_london_alpha_2_weeks",
+        "agile_octopus_london_beta_2_weeks",
+        "agile_octopus_london_delta_2_weeks"
+    ]
+
+    for file_name in training_data_file_names:
+        training_data_df = pd.read_csv(f"./data/{file_name}.csv")
+        training_data_values_np = np.array(training_data_df["Price_Ex_VAT"].values)
+        # print(training_data_values_np)
+        # print(np.shape([training_data_values_np]))
+        convert_to_arrow(f"./data/{file_name}.arrow", time_series=[training_data_values_np])
+    print("Done converting files to arrow format")
